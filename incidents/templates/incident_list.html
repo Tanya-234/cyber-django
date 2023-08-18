@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Incident List</h1>
+<a href="{% url 'logout' %}" class="btn btn-purple">Logout</a>
+<table class="incident-table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Severity</th>
+            <th>Report Date</th>
+            <th>Description</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for incident in incidents %}
+            <tr>
+                <td>{{ incident.type }}</td>
+                <td>{{ incident.severity }}</td>
+                <td>{{ incident.Report_date }}</td>
+                <td>{{ incident.description }}</td>
+                
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

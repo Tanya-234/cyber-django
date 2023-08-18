@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+  <div class="user-profile">
+    <h2>User Profile</h2>
+    <div class="profile-details">
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>First Name </strong> {{ user.first_name }}</p>
+      <p><strong>Last Name</strong> {{ user.last_name }}</p>
+      <!-- Add more profile details here -->
+    </div>
+    <a href="{% url 'edit_profile' %}" class="btn btn-purple">Edit Profile</a>
+    <a href="{% url 'home' %}" class="btn btn-primary">Home</a> 
+    <a href="{% url 'report_incident' %}" class="btn btn-primary">Report Incident</a>
+    <a href="{% url 'logout' %}" class="btn btn-purple">Logout</a>
+  </div>
+{% endblock %}

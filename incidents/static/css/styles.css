@@ -107,7 +107,6 @@ body {
     color: #9c27b0;
   }
   
-  /* Add the following styles to your existing CSS file */
 .edit-profile-form {
   background-color: #ffffff;
   border-radius: 10px;
@@ -163,25 +162,42 @@ body {
   color: #9c27b0;
 }
 
-.form-field {
-  margin-bottom: 20px; 
+form div.form-field {
+  margin-top: 20px;
 }
 
-.incident-table {
-  border-collapse: collapse;
+.form-field label {
+  display: block;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.form-field input,
+.form-field select {
   width: 100%;
-  border: 1px solid #ddd;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.incident-table th, .incident-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+.form-field textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.incident-table th {
-  background-color: #f2f2f2;
+.buttons-container {
+  float: left;
+  margin-top: 10px;
+  margin-right: 100px;
 }
 
+.btn {
+  display: inline-block;
+  margin-left: 10px;
+}
 
-
+.serial-number {
+  width: 50px; /* Adjust the width as needed */
+}

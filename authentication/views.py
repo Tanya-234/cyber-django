@@ -1,16 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView,PasswordResetView
 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.contrib import messages
+from django.contrib.auth.forms import UserChangeForm
+from authentication.models import CustomUser
+from .forms import ProfileEditForm
+from django.contrib.auth import views as auth_views
 
 class RegistrationView(CreateView):
     form_class = UserCreationForm  # Use the default user creation form
     template_name = 'registration/register.html'
-    success_url = reverse_lazy('registration/login')  # Redirect to login page after successful registration
+    success_url = reverse_lazy('login')  # Redirect to login page after successful registration
 
     def form_valid(self, form):
         # Automatically log the user in after successful registration
@@ -23,12 +28,43 @@ class HomeView(View):
         return render(request, 'home.html')
     
 class LoginView(View):
-    def get( self,request,*args, **kwargs):
+    template_name = 'login.html'
+    
+    def get(self, request, *args, **kwargs):
         return render(request, 'login.html')
+class CustomLogoutView(auth_views.LogoutView):
+    template_name = 'registration/logout.html'  
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        return response
+
+class PasswordResetView(View):
+    template_name = 'password_reset.html'
+    success_url = reverse_lazy('password_reset_done')
+
+    def get(self, request,*args, **kwargs):
+        return render(request, 'password_reset.html')
+class ProfileView(View):
+    template_name = 'profile.html'
+    success_url = 'edit_profile'
+
+    def get(self, request,*args, **kwargs):
+        return render(request, 'profile.html')
+
+class EditProfileView(View):
+    template_name = 'edit_profile.html'
     
-class LogoutView(View):
-    def get( self,request,*args, **kwargs):
-        return render(request, 'logout.html')
+    def get(self, request, *args, **kwargs):
+        form = ProfileEditForm(instance=request.user)
+        return render(request, self.template_name, {'form': form})
     
-   
-   
+    def post(self, request, *args, **kwargs):
+        form = ProfileEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated successfully.')
+            return redirect('profile')  # Redirect to the profile page
+        else:
+            messages.error(request, 'There was an error updating your profile.')
+            return render(request, self.template_name, {'form': form})

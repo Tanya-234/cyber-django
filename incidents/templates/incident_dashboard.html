@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Incident Dashboard</h1>
+
+    <div class="buttons-container">
+        <a href="{% url 'report_incident' %}" class="btn btn-purple">Report Incident</a>
+        <a href="{% url 'logout' %}" class="btn btn-purple">Logout</a>
+    </div>
+    <table class="incident-table">
+        <thead>
+            <tr>
+                <th>Serial Number</th> 
+                <th>Type</th>
+                <th>Severity</th>
+                <th>Report Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for incident in incidents %}
+                <tr>
+                    <td style="width: 20px;">{{ forloop.counter }}</td> 
+                    <td style="width: 140px;"><a href="{% url 'incident_detail' incident.id %}">{{ incident.type }}</a></td>
+                    <td style="width: 140px;">{{ incident.severity }}</td>
+                    <td>{{ incident.Report_date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    
+    </table>
+{% endblock %}
+

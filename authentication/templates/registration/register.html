@@ -9,8 +9,10 @@
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit" class="btn-purple">Register</button>
+      <a href="{% url 'home' %}" class="btn btn-purple mt-3">Back to Home</a>
     </form>
   </div>
+  
 {% endblock %}
 
 <!DOCTYPE html>
