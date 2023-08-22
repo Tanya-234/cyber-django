@@ -10,4 +10,18 @@
     <p>Severity: {{ incident.severity }}</p>
     <p>Report Date: {{ incident.Report_date }}</p>
     <p>Description: {{ incident.description }}</p>
+    <p>Status: {{ incident.status }}</p>
+
+    {% if incident.evidence %}
+        <p><a href="{{ incident.evidence.url }}">Download Evidence</a></p>
+    {% else %}
+        <p>No evidence uploaded for this incident.</p>
+    {% endif %}
+    
+    <div class="buttons-container">
+        <a href="{% url 'delete_incident' incident.id %}" class="btn btn-purple">Delete Incident</a>
+    </div>   
 {% endblock %}
+
+
+

@@ -78,7 +78,7 @@ LOGIN_REDIRECT_URL = 'profile'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db2',
+        'NAME': 'db4',
         'USER': 'root',
         'PASSWORD': 'Tanya@123',
         'HOST': '127.0.0.1',
@@ -87,6 +87,11 @@ DATABASES = {
     }
 }
 
+
+AUTH_USER_MODEL = 'authentication.User'
+
+# settings.py
+PASSWORD_RESET_TEMPLATE = 'password_reset.html'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -127,6 +132,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

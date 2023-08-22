@@ -7,27 +7,65 @@
         <a href="{% url 'report_incident' %}" class="btn btn-purple">Report Incident</a>
         <a href="{% url 'logout' %}" class="btn btn-purple">Logout</a>
     </div>
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search by type, severity, or status" value="{{ request.GET.q }}">
+        <select name="severity">
+            <option value="">Select Severity</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+        <select name="status">
+            <option value="">Select Status</option>
+            <option value="Open">Resolved</option>
+            <option value="Closed">Closed</option>
+            <option value="In Progress">In Progress</option>
+        </select>
+        <button type="submit">Apply Filters</button>
+    </form>
     <table class="incident-table">
         <thead>
             <tr>
                 <th>Serial Number</th> 
                 <th>Type</th>
                 <th>Severity</th>
+                <th>Status</th>
                 <th>Report Date</th>
             </tr>
         </thead>
         <tbody>
             
-            {% for incident in incidents %}
+            {% for incident in page_obj %}
                 <tr>
-                    <td style="width: 20px;">{{ forloop.counter }}</td> 
-                    <td style="width: 140px;"><a href="{% url 'incident_detail' incident.id %}">{{ incident.type }}</a></td>
-                    <td style="width: 140px;">{{ incident.severity }}</td>
-                    <td>{{ incident.Report_date }}</td>
+                    <td style="width: 10px;">{{ forloop.counter }}</td> 
+                    <td style="width: 90px;"><a href="{% url 'incident_detail' incident.id %}">{{ incident.type }}</a></td>
+                    <td style="width: 90px;">{{ incident.severity }}</td>
+                    <td style="width: 90px;">{{ incident.status }}</td>
+                    <td style="width: 600px;">{{ incident.Report_date }}</td>
+                    
                 </tr>
+                
             {% endfor %}
         </tbody>
-    
     </table>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current-page">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 {% endblock %}
+
 

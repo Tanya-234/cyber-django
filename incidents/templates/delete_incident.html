@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Delete Incident</h1>
+    <p>Are you sure you want to delete the following incident?</p>
+    <table class="incident-details">
+        <tr>
+            <th>Type:</th>
+            <td>{{ incident.type }}</td>
+        </tr>
+        <tr>
+            <th>Severity:</th>
+            <td>{{ incident.severity }}</td>
+        </tr>
+        <!-- ... other incident details ... -->
+    </table>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger mt-3">Confirm Delete</button>
+        <a href="{% url 'report_incident' %}" class="btn btn-secondary mt-3">Cancel</a>
+    </form>
+{% endblock %}
