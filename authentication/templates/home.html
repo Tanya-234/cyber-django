@@ -1,12 +1,30 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
   <div class="hero">
-    <h1>Welcome to Our Website!</h1>
-    <p>Your go-to destination for amazing content.</p>
-    <a href="{% url 'register' %}" class="btn">Sign Up</a>
-    <a href="{% url 'login' %}" class="btn">Login</a>
+    <h1>{% trans 'Welcome to our website!' %}</h1>
+    <p>{% trans 'Your go-to destination for amazing content.' %}</p>
+    <a href="{% url 'register' %}" class="btn">{% trans 'Sign Up' %}</a>
+    <a href="{% url 'login' %}" class="btn">{% trans 'Login' %}</a>
+    
+    {% if request.LANGUAGE_CODE == 'en' %}
+      <a href="{% url 'switch_language' language_code='es' %}?next={{ request.path }}" class="btn">Switch to Spanish</a>
+    {% else %}
+      <a href="{% url 'switch_language' language_code='en' %}?next={{ request.path }}" class="btn">Switch to English</a>
+    {% endif %}
   </div>
 {% endblock %}
+
+
+  
+
+
+
+
+
+
+

@@ -15,17 +15,27 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from authentication.views import HomeView
+from django.urls import path, include,re_path
+from authentication.views import HomeView, switch_language
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.staticfiles.views import serve
+from django.conf.urls.i18n import i18n_patterns
 
-urlpatterns = [
+
+
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('authentication/',include('authentication.urls')),
     path('', HomeView.as_view(), name='home'),
     path('incidents/',include('incidents.urls')),
-]
+    path('switch_language/<str:language_code>/', switch_language, name='switch_language'),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# path('switch-language/', views.switch_language, name='switch_language'),

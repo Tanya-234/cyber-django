@@ -12,7 +12,14 @@ from .forms import ProfileEditForm
 from django.contrib.auth import views as auth_views
 
 from .forms import CustomUserChangeForm, PasswordResetForm
+from django.utils.translation import activate
+from django.utils import translation
+import logging
+from django.http import HttpResponseRedirect
+from django.conf import settings
 
+
+logger = logging.getLogger(__name__)
 
 class RegistrationView(CreateView):
     form_class = CustomUserChangeForm  # Use your custom form
@@ -25,17 +32,14 @@ class RegistrationView(CreateView):
         login(self.request, self.object)
         return response
 
-
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'home.html')
-    
 class LoginView(View):
     template_name = 'login.html'
     
     def get(self, request, *args, **kwargs):
         return render(request, 'login.html')
-    
 class CustomLogoutView(auth_views.LogoutView):
     template_name = 'registration/logout.html'  
 
@@ -49,7 +53,7 @@ class CustomPasswordResetView(PasswordResetView):
     success_url = reverse_lazy('password_reset_done')
 
     def get(self, request,*args, **kwargs):
-        form = PasswordResetForm(instance=request.user)
+        # form = PasswordResetForm(instance=request.user)
         return render(request, 'password_reset.html')
     
 class ProfileView(View):
@@ -76,3 +80,24 @@ class EditProfileView(View):
         else:
             messages.error(request, 'There was an error updating your profile.')
             return render(request, self.template_name, {'form': form})
+
+def switch_language(request, language_code):
+    next_url = request.GET.get('next', '/')
+    print(f"Activating language: {language_code}")
+    print(f"Next URL: {next_url}")
+
+    if translation.check_for_language(language_code):
+        translation.activate(language_code)
+        print(f"Activated language: {translation.get_language()}")
+        
+        response = HttpResponseRedirect(next_url)
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
+    else:
+        print("Invalid language code:", language_code)
+        response = redirect(next_url)
+    
+    return response
+
+
+
+
