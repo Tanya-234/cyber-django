@@ -25,10 +25,13 @@ msgid "Your go-to destination for amazing content."
 msgstr "Tu destino principal para un contenido increíble."
 
 msgid "Sign Up"
-msgstr "Registrarse"  # Spanish translation
+msgstr "Registrarse" 
 
 msgid "Login"
-msgstr "Iniciar sesión"  # Spanish translation
+msgstr "Iniciar sesión" 
+
+msgid "Email"
+msgstr "correo electrónico" 
 
 #: securepass/settings.py:147
 msgid "English"

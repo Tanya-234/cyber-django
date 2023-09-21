@@ -5,26 +5,58 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <div class="hero">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<div class="hero">
     <h1>{% trans 'Welcome to our website!' %}</h1>
     <p>{% trans 'Your go-to destination for amazing content.' %}</p>
-    <a href="{% url 'register' %}" class="btn">{% trans 'Sign Up' %}</a>
-    <a href="{% url 'login' %}" class="btn">{% trans 'Login' %}</a>
+    
+    {% if user.is_authenticated %}
+        <a href="{% url 'incident_dashboard' %}" class="btn">{% trans 'Dashboard' %}</a>
+        <a href="{% url 'logout' %}" class="btn">{% trans 'Log Out' %}</a>
+    {% else %}
+        <a href="{% url 'register' %}" class="btn">{% trans 'Sign Up' %}</a>
+        <a href="{% url 'login' %}" class="btn">{% trans 'Login' %}</a>
+    {% endif %}
     
     {% if request.LANGUAGE_CODE == 'en' %}
-      <a href="{% url 'switch_language' language_code='es' %}?next={{ request.path }}" class="btn">Switch to Spanish</a>
+        <a href="{% url 'switch_language' 'es' %}?next={{ request.path }}" class="btn language-switch">Switch to Spanish</a>
     {% else %}
-      <a href="{% url 'switch_language' language_code='en' %}?next={{ request.path }}" class="btn">Switch to English</a>
+        <a href="{% url 'switch_language' 'en' %}?next={{ request.path }}" class="btn language-switch">Switch to English</a>
     {% endif %}
-  </div>
+
+    
+    {% block extra_head %}
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const switchLanguageButton = document.querySelector('.hero a.language-switch'); // Target the language switch button
+        switchLanguageButton.addEventListener('click', function (event) {
+          event.preventDefault(); // Prevent the default anchor click behavior
+          const currentPath = window.location.pathname;
+          let newUrl;
+    
+          // Check the current language and switch accordingly
+          if (currentPath.startsWith('/en/')) {
+            newUrl = currentPath.replace('/en/', '/es/'); // Switch to Spanish
+          } else if (currentPath.startsWith('/es/')) {
+            newUrl = currentPath.replace('/es/', '/en/'); // Switch to English
+          }
+    
+          if (newUrl) {
+            window.location.href = newUrl;
+          }
+        });
+      });
+    </script>
+
+    
+    {% endblock %}
+</div>
 {% endblock %}
-
-
-  
-
-
-
-
-
-
-

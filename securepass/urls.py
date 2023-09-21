@@ -38,4 +38,5 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-# path('switch-language/', views.switch_language, name='switch_language'),
+#  path('switch_language/<str:language_code>/', switch_language, name='switch_language'),
+#path('switch_language/', switch_language, name='switch_language'),

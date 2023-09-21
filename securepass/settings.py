@@ -95,6 +95,9 @@ AUTH_USER_MODEL = 'authentication.User'
 # settings.py
 PASSWORD_RESET_TEMPLATE = 'password_reset.html'
 
+PASSWORD_RESET_EMAIL_TEMPLATE = 'registration/password_reset_email.html'
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -173,3 +176,11 @@ EMAIL_HOST_USER = "emailhost232@gmail.com"  # Replace with your email address
 EMAIL_HOST_PASSWORD = "lbsyfwmuqtkgvyos"
 DEFAULT_FROM_EMAIL = "emailhost232@gmail.com"
 
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+#LOGIN_REDIRECT_URL = 'incidents/incident_dashboard' 
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    # Add other backends if needed
+]
