@@ -23,6 +23,7 @@ def incident_list(request):
     return render(request, 'incident_list.html', {'incidents': incidents})
 
 
+
 def incident_dashboard(request):
     query = request.GET.get('q')
     severity = request.GET.get('severity')

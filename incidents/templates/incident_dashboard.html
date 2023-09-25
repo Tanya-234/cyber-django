@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
     <h1>Incident Dashboard</h1>
 
     <div class="buttons-container">
-        <a href="{% url 'report_incident' %}" class="btn btn-purple">Report Incident</a>
-        <a href="{% url 'logout' %}" class="btn btn-purple">Logout</a>
+        <a href="{% url 'report_incident' %}" class="btn btn-purple">{% trans 'Report Incident' %}</a>
+        <a href="{% url 'logout' %}" class="btn btn-purple">{% trans 'Log Out' %}</a>
+        {% if request.LANGUAGE_CODE == 'en' %}
+        <a href="{% url 'switch_language' 'es' %}?next={{ request.path }}" class="btn language-switch">Switch to Spanish</a>
+    {% else %}
+        <a href="{% url 'switch_language' 'en' %}?next={{ request.path }}" class="btn language-switch">Switch to English</a>
+    {% endif %}
     </div>
     <form method="GET">
         <input type="text" name="q" placeholder="Search by type, severity, or status" value="{{ request.GET.q }}">
@@ -17,7 +24,7 @@
         </select>
         <select name="status">
             <option value="">Select Status</option>
-            <option value="Open">Resolved</option>
+            <option value="Resolved">Resolved</option>
             <option value="Closed">Closed</option>
             <option value="In Progress">In Progress</option>
         </select>
@@ -66,6 +73,27 @@
             {% endif %}
         </span>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const switchLanguageButton = document.querySelector('.hero a.language-switch'); // Target the language switch button
+          switchLanguageButton.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default anchor click behavior
+            const currentPath = window.location.pathname;
+            let newUrl;
+      
+            // Check the current language and switch accordingly
+            if (currentPath.startsWith('/en/')) {
+              newUrl = currentPath.replace('/en/', '/es/'); // Switch to Spanish
+            } else if (currentPath.startsWith('/es/')) {
+              newUrl = currentPath.replace('/es/', '/en/'); // Switch to English
+            }
+      
+            if (newUrl) {
+              window.location.href = newUrl;
+            }
+          });
+        });
+      </script>
 {% endblock %}
 
 

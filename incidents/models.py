@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils import timezone
             
 class incidents_detail(models.Model):
@@ -29,4 +28,7 @@ class incidents_detail(models.Model):
     evidence = models.FileField(upload_to='evidence/', blank=True, null=True)
     def __str__(self):
         return self.type
+
+    
+
                                     

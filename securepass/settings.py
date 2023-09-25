@@ -92,7 +92,6 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'authentication.User'
 
-# settings.py
 PASSWORD_RESET_TEMPLATE = 'password_reset.html'
 
 PASSWORD_RESET_EMAIL_TEMPLATE = 'registration/password_reset_email.html'
