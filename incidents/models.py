@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from authentication.models import User
             
 class incidents_detail(models.Model):
     SEVERITY_CHOICES = (
@@ -19,7 +20,8 @@ class incidents_detail(models.Model):
         ('Resolved','Resolved'),
         ('Closed','Closed')
     )
-                
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)           
     type= models.CharField(max_length=200,choices=TYPE_CHOICES)                
     description = models.TextField()
     severity = models.CharField(max_length=10, choices=SEVERITY_CHOICES)

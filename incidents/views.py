@@ -9,6 +9,7 @@ def report_incidents(request):
     if request.method == 'POST':
         form = IncidentForm(request.POST, request.FILES)
         if form.is_valid():
+            form.instance.user = request.user
             form.save()
             messages.success(request, 'Your incident has been reported.')
             return redirect('incident_dashboard')  # Redirect to a success page or incident list

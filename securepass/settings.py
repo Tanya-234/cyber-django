@@ -80,7 +80,7 @@ LOGIN_REDIRECT_URL = 'profile'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db4',
+        'NAME': 'Db4',
         'USER': 'root',
         'PASSWORD': 'Tanya@123',
         'HOST': '127.0.0.1',

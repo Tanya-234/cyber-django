@@ -83,7 +83,7 @@ class CustomLogoutView(auth_views.LogoutView):
         return response
     
 class CustomPasswordResetView(PasswordResetView):
-    template_name = 'registration/password_reset.html'
+    template_name = 'templates/registration/password_reset.html'
     email_template_name = 'registration/password_reset_email.html'  # Optional: customize the email template
     success_url = reverse_lazy('password_reset_done')
 
